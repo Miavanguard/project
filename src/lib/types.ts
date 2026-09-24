@@ -29,3 +29,17 @@ export interface BookedSlot {
   preferred_date: string;
   preferred_time: string;
 }
+
+/** Mirrors `public.team_members` */
+export interface TeamMemberRow {
+  id: string;
+  name_en: string;
+  name_ar: string;
+  role_en: string;
+  role_ar: string;
+  initials: string;
+  image_url: string | null;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+}

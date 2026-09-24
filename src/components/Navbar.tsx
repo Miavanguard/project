@@ -14,7 +14,6 @@ export default function Navbar({ onNavigate }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoFailed, setLogoFailed] = useState(false);
-  const [logoSrc, setLogoSrc] = useState('/logo.png');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -60,13 +59,10 @@ export default function Navbar({ onNavigate }: NavbarProps) {
         >
           {!logoFailed ? (
             <img
-              src={logoSrc}
+              src="/logo.png"
               alt="La Belleza Aesthetica Clinic"
               className="h-10 w-auto object-contain drop-shadow-[0_0_12px_rgba(212,175,55,0.25)] group-hover:scale-[1.03] transition-transform duration-300"
-              onError={() => {
-                if (logoSrc === '/logo.png') setLogoSrc('/logo.svg');
-                else setLogoFailed(true);
-              }}
+              onError={() => setLogoFailed(true)}
             />
           ) : (
             <>

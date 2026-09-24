@@ -201,19 +201,37 @@ export interface TeamMember {
   roleEn: string;
   roleAr: string;
   initials: string;
-  /** Optional headshot path — drop files into /public/team/ */
+  /** Public path or CDN URL — maps to `team_members.image_url` */
   imageUrl?: string;
+  /** Display order — maps to `team_members.sort_order` */
+  sortOrder?: number;
+  /** Visibility flag — maps to `team_members.is_active` */
+  isActive?: boolean;
 }
 
+/** Default team roster (mirrors `public.team_members` rows for local / offline fallback). */
 export const TEAM: TeamMember[] = [
   {
     id: 'clara',
     name: 'Dr. Clara Elbadry',
     nameAr: 'د. كلارا البدري',
     roleEn: 'Dermatology & Aesthetics',
-    roleAr: 'الأمراض الجلدية والتجميل',
+    roleAr: 'طب الجلدية والتجميل',
     initials: 'CE',
-    imageUrl: '/team/clara.jpg',
+    imageUrl: '/team/dr-clara.jpg',
+    sortOrder: 1,
+    isActive: true,
+  },
+  {
+    id: 'diyar',
+    name: 'Dr. Diyar Malik',
+    nameAr: 'د. ديار مالك',
+    roleEn: 'Aesthetic & General Dentistry',
+    roleAr: 'طب الأسنان التجميلي والعام',
+    initials: 'DM',
+    imageUrl: '/team/dr-diyar.jpg',
+    sortOrder: 2,
+    isActive: true,
   },
   {
     id: 'sarah',
@@ -223,15 +241,8 @@ export const TEAM: TeamMember[] = [
     roleAr: 'طبيبة أسنان تجميلية',
     initials: 'SA',
     imageUrl: '/team/sarah.jpg',
-  },
-  {
-    id: 'diyar',
-    name: 'Dr. Diyar Malik',
-    nameAr: 'د. ديار مالك',
-    roleEn: 'Aesthetic & General Dentistry',
-    roleAr: 'طب الأسنان التجميلي والعام',
-    initials: 'DM',
-    imageUrl: '/team/diyar.jpg',
+    sortOrder: 3,
+    isActive: true,
   },
   {
     id: 'nahla',
@@ -241,6 +252,8 @@ export const TEAM: TeamMember[] = [
     roleAr: 'طبيبة أسنان تجميلية',
     initials: 'NS',
     imageUrl: '/team/nahla.jpg',
+    sortOrder: 4,
+    isActive: true,
   },
   {
     id: 'saba',
@@ -250,6 +263,8 @@ export const TEAM: TeamMember[] = [
     roleAr: 'أخصائية وجه ومعالجة تجميل',
     initials: 'SH',
     imageUrl: '/team/saba.jpg',
+    sortOrder: 5,
+    isActive: true,
   },
 ];
 
