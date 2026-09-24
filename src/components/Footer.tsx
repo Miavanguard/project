@@ -65,6 +65,7 @@ export default function Footer() {
                 { label: t.nav.treatments, href: '#treatments' },
                 { label: t.nav.offers, href: '#offers' },
                 { label: t.nav.team, href: '#team' },
+                { label: t.nav.gallery, href: '#gallery' },
                 { label: t.nav.reviews, href: '#reviews' },
                 { label: t.nav.book, href: '#contact' },
               ].map((link) => (

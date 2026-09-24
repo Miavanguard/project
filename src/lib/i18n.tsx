@@ -8,6 +8,7 @@ export interface Translations {
     treatments: string;
     offers: string;
     team: string;
+    gallery: string;
     reviews: string;
     contact: string;
     admin: string;
@@ -41,6 +42,7 @@ export interface Translations {
     cat4Desc: string;
     learnMore: string;
     beforeAfter: string;
+    beforeAfterHint: string;
     before: string;
     after: string;
     disclaimer: string;
@@ -56,6 +58,11 @@ export interface Translations {
     whatsappCta: string;
   };
   team: {
+    label: string;
+    title: string;
+    subtitle: string;
+  };
+  gallery: {
     label: string;
     title: string;
     subtitle: string;
@@ -138,6 +145,7 @@ export const translations: Record<Lang, Translations> = {
       treatments: 'Treatments',
       offers: 'Offers',
       team: 'Our Team',
+      gallery: 'Gallery',
       reviews: 'Reviews',
       contact: 'Contact',
       admin: 'Admin',
@@ -177,6 +185,7 @@ export const translations: Record<Lang, Translations> = {
         'Hollywood-grade veneers and smile makeovers crafted to perfect proportions and natural whiteness.',
       learnMore: 'Learn More',
       beforeAfter: 'Before & After',
+      beforeAfterHint: 'Slide to compare results across our signature treatments.',
       before: 'Before',
       after: 'After',
       disclaimer:
@@ -188,7 +197,7 @@ export const translations: Record<Lang, Translations> = {
       subtitle:
         'Exclusive Instagram offers curated for this month — claim yours before they expire.',
       aed: 'AED',
-      claim: 'Claim Offer',
+      claim: 'Book Offer',
       save: 'Save',
       from: 'From',
       whatsappCta: 'Ask about this offer on WhatsApp',
@@ -198,6 +207,12 @@ export const translations: Record<Lang, Translations> = {
       title: 'Our Specialists',
       subtitle:
         'Meet the verified doctors and beauty specialists behind every La Belleza transformation.',
+    },
+    gallery: {
+      label: 'Inside La Belleza',
+      title: 'Clinic Experience & Gallery',
+      subtitle:
+        'Step into our Dubai sanctuary — treatment suites, refined interiors, and the atmosphere of luxury care.',
     },
     reviews: {
       label: 'Client Love',
@@ -259,7 +274,7 @@ export const translations: Record<Lang, Translations> = {
       status: 'Status',
       updateStatus: 'Update status',
       back: 'Back to site',
-      loginError: 'Invalid credentials. Please try again.',
+      loginError: 'Invalid admin credentials.',
       name: 'Name',
       phone: 'Phone',
       service: 'Service',
@@ -277,6 +292,7 @@ export const translations: Record<Lang, Translations> = {
       treatments: 'العلاجات',
       offers: 'العروض',
       team: 'فريقنا',
+      gallery: 'المعرض',
       reviews: 'التقييمات',
       contact: 'تواصل',
       admin: 'الإدارة',
@@ -316,6 +332,7 @@ export const translations: Record<Lang, Translations> = {
         'قشور بمستوى هوليوود وتصميم ابتسامة بإتقان متناسب وبياض طبيعي.',
       learnMore: 'اعرف المزيد',
       beforeAfter: 'قبل وبعد',
+      beforeAfterHint: 'اسحبي للمقارنة عبر علاجاتنا المميزة.',
       before: 'قبل',
       after: 'بعد',
       disclaimer:
@@ -327,7 +344,7 @@ export const translations: Record<Lang, Translations> = {
       subtitle:
         'عروض حصرية من إنستغرام لهذا الشهر — احجزي عرضك قبل انتهائه.',
       aed: 'درهم',
-      claim: 'احصل على العرض',
+      claim: 'احجزي العرض',
       save: 'وفّر',
       from: 'ابتداءً من',
       whatsappCta: 'اسألي عن هذا العرض عبر واتساب',
@@ -337,6 +354,12 @@ export const translations: Record<Lang, Translations> = {
       title: 'أخصائيونا',
       subtitle:
         'تعرّفي على الأطباء والمتخصصين المعتمدين خلف كل تحوّل في لا بيليزا.',
+    },
+    gallery: {
+      label: 'داخل لا بيليزا',
+      title: 'تجربة العيادة والمعرض',
+      subtitle:
+        'ادخلي إلى ملاذنا في دبي — أجنحة العلاج، التصميم الفاخر، وأجواء الرعاية الراقية.',
     },
     reviews: {
       label: 'حب العملاء',
@@ -398,7 +421,7 @@ export const translations: Record<Lang, Translations> = {
       status: 'الحالة',
       updateStatus: 'تحديث الحالة',
       back: 'العودة للموقع',
-      loginError: 'بيانات غير صحيحة. يرجى المحاولة مرة أخرى.',
+      loginError: 'Invalid admin credentials.',
       name: 'الاسم',
       phone: 'الهاتف',
       service: 'الخدمة',

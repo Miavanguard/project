@@ -5,9 +5,10 @@ import { useAuth } from '@/lib/auth';
 
 interface AdminLoginProps {
   onBack: () => void;
+  onSuccess: () => void;
 }
 
-export default function AdminLogin({ onBack }: AdminLoginProps) {
+export default function AdminLogin({ onBack, onSuccess }: AdminLoginProps) {
   const { t, dir } = useI18n();
   const isAr = dir === 'rtl';
   const { signIn } = useAuth();
@@ -20,9 +21,13 @@ export default function AdminLogin({ onBack }: AdminLoginProps) {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    const { error } = await signIn(email, password);
+    const { error: authError } = await signIn(email, password);
     setLoading(false);
-    if (error) setError(t.admin.loginError);
+    if (authError) {
+      setError('Invalid admin credentials.');
+      return;
+    }
+    onSuccess();
   };
 
   return (

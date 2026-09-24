@@ -4,8 +4,8 @@ import { useI18n, type Lang } from '@/lib/i18n';
 import { useBooking } from '@/lib/booking';
 
 interface NavbarProps {
-  onNavigate: (route: 'site' | 'admin') => void;
-  currentRoute: 'site' | 'admin';
+  onNavigate: (route: 'site' | 'admin' | 'admin-dashboard') => void;
+  currentRoute: 'site' | 'admin' | 'admin-dashboard';
 }
 
 export default function Navbar({ onNavigate }: NavbarProps) {
@@ -13,6 +13,8 @@ export default function Navbar({ onNavigate }: NavbarProps) {
   const { openModal } = useBooking();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoFailed, setLogoFailed] = useState(false);
+  const [logoSrc, setLogoSrc] = useState('/logo.png');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -22,6 +24,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
   }, []);
 
   const switchLang = (l: Lang) => {
+    localStorage.setItem('preferred_language', l);
     setLang(l);
     document.documentElement.lang = l;
     document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
@@ -32,6 +35,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
     { label: t.nav.treatments, href: '#treatments' },
     { label: t.nav.offers, href: '#offers' },
     { label: t.nav.team, href: '#team' },
+    { label: t.nav.gallery, href: '#gallery' },
     { label: t.nav.reviews, href: '#reviews' },
     { label: t.nav.contact, href: '#contact' },
   ];
@@ -51,22 +55,37 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       <nav className="section-pad flex items-center justify-between gap-4">
         <button
           onClick={() => onNavigate('site')}
-          className="flex items-center gap-2.5 group"
+          className="flex items-center gap-2.5 group shrink-0"
+          aria-label="La Belleza Aesthetica Clinic"
         >
-          <div className="relative w-9 h-9 rounded-full bg-gold-gradient flex items-center justify-center shadow-lg shadow-gold-400/20 group-hover:scale-110 transition-transform">
-            <Sparkles className="w-5 h-5 text-ink-950" />
-          </div>
-          <div className="text-left">
-            <div className={`font-serif text-lg leading-none ${dir === 'rtl' ? 'font-arabic' : ''}`}>
-              <span className="gold-text">La Belleza</span>
-            </div>
-            <div className="text-[10px] tracking-[0.2em] uppercase text-ink-300 mt-0.5">
-              {lang === 'ar' ? 'عيادة التجميل' : 'Aesthetica Clinic'}
-            </div>
-          </div>
+          {!logoFailed ? (
+            <img
+              src={logoSrc}
+              alt="La Belleza Aesthetica Clinic"
+              className="h-10 w-auto object-contain drop-shadow-[0_0_12px_rgba(212,175,55,0.25)] group-hover:scale-[1.03] transition-transform duration-300"
+              onError={() => {
+                if (logoSrc === '/logo.png') setLogoSrc('/logo.svg');
+                else setLogoFailed(true);
+              }}
+            />
+          ) : (
+            <>
+              <div className="relative w-9 h-9 rounded-full bg-gold-gradient flex items-center justify-center shadow-lg shadow-gold-400/20 group-hover:scale-110 transition-transform">
+                <Sparkles className="w-5 h-5 text-ink-950" />
+              </div>
+              <div className="text-left">
+                <div className={`font-serif text-lg leading-none ${dir === 'rtl' ? 'font-arabic' : ''}`}>
+                  <span className="gold-text">La Belleza</span>
+                </div>
+                <div className="text-[10px] tracking-[0.2em] uppercase text-ink-300 mt-0.5">
+                  {lang === 'ar' ? 'عيادة التجميل' : 'Aesthetica Clinic'}
+                </div>
+              </div>
+            </>
+          )}
         </button>
 
-        <div className="hidden lg:flex items-center gap-7">
+        <div className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <button
               key={link.href}
@@ -82,7 +101,6 @@ export default function Navbar({ onNavigate }: NavbarProps) {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* EN / AR language switcher pill */}
           <div
             className="flex items-center rounded-full border border-gold-400/25 bg-ink-900/70 backdrop-blur-md p-0.5"
             role="group"

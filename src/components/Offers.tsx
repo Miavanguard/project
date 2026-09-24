@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react';
 import { Tag, ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { useBooking } from '@/lib/booking';
-import { OFFERS, getWhatsAppUrl } from '@/lib/constants';
+import { OFFERS, getWhatsAppUrl, type SpecialOffer } from '@/lib/constants';
 import BnplBadges from '@/components/BnplBadges';
 
 /**
- * Active Monthly Specials carousel.
- * Data lives in `OFFERS` (constants) for easy monthly updates.
- * Swap `OFFERS` for a Supabase query later without changing this UI.
+ * Active Monthly Specials carousel / grid.
+ * Set `imageUrl` on each offer in constants to drop in custom photos.
  */
 export default function Offers() {
   const { t, lang, dir } = useI18n();
@@ -25,13 +24,6 @@ export default function Offers() {
   }, []);
 
   const offer = OFFERS[active];
-  const title = lang === 'ar' ? offer.titleAr : offer.titleEn;
-  const desc = lang === 'ar' ? offer.descAr : offer.descEn;
-  const badge = lang === 'ar' ? offer.badgeAr : offer.badgeEn;
-  const savings =
-    offer.originalPrice && offer.originalPrice > offer.price
-      ? offer.originalPrice - offer.price
-      : null;
 
   return (
     <section id="offers" className="relative py-24 lg:py-32 overflow-hidden">
@@ -52,25 +44,19 @@ export default function Offers() {
           </p>
         </div>
 
-        {/* Mobile / featured carousel */}
         <div className="max-w-4xl mx-auto lg:hidden">
           <div className="relative">
             <OfferCard
-              key={active}
-              title={title}
-              desc={desc}
-              badge={badge}
-              price={offer.price}
-              originalPrice={offer.originalPrice}
-              fromPrice={offer.fromPrice}
-              savings={savings}
+              key={offer.id}
+              offer={offer}
               isAr={isAr}
+              lang={lang}
               aed={t.offers.aed}
               saveLabel={t.offers.save}
               fromLabel={t.offers.from}
               claimLabel={t.offers.claim}
               consultLabel={lang === 'ar' ? 'تشمل استشارة مجانية' : 'Includes a complimentary consultation'}
-              onClaim={() => openModal(title)}
+              onClaim={() => openModal(lang === 'ar' ? offer.titleAr : offer.titleEn)}
             />
 
             <button
@@ -103,37 +89,22 @@ export default function Offers() {
           </div>
         </div>
 
-        {/* Desktop grid of all active specials */}
         <div className="hidden lg:grid grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {OFFERS.map((o) => {
-            const oTitle = lang === 'ar' ? o.titleAr : o.titleEn;
-            const oDesc = lang === 'ar' ? o.descAr : o.descEn;
-            const oBadge = lang === 'ar' ? o.badgeAr : o.badgeEn;
-            const oSavings =
-              o.originalPrice && o.originalPrice > o.price
-                ? o.originalPrice - o.price
-                : null;
-            return (
-              <OfferCard
-                key={o.id}
-                title={oTitle}
-                desc={oDesc}
-                badge={oBadge}
-                price={o.price}
-                originalPrice={o.originalPrice}
-                fromPrice={o.fromPrice}
-                savings={oSavings}
-                isAr={isAr}
-                aed={t.offers.aed}
-                saveLabel={t.offers.save}
-                fromLabel={t.offers.from}
-                claimLabel={t.offers.claim}
-                consultLabel={lang === 'ar' ? 'تشمل استشارة مجانية' : 'Includes a complimentary consultation'}
-                onClaim={() => openModal(oTitle)}
-                compact
-              />
-            );
-          })}
+          {OFFERS.map((o) => (
+            <OfferCard
+              key={o.id}
+              offer={o}
+              isAr={isAr}
+              lang={lang}
+              aed={t.offers.aed}
+              saveLabel={t.offers.save}
+              fromLabel={t.offers.from}
+              claimLabel={t.offers.claim}
+              consultLabel={lang === 'ar' ? 'تشمل استشارة مجانية' : 'Includes a complimentary consultation'}
+              onClaim={() => openModal(lang === 'ar' ? o.titleAr : o.titleEn)}
+              compact
+            />
+          ))}
         </div>
 
         <div className="mt-10 text-center">
@@ -152,14 +123,9 @@ export default function Offers() {
 }
 
 interface OfferCardProps {
-  title: string;
-  desc: string;
-  badge: string;
-  price: number;
-  originalPrice?: number;
-  fromPrice?: boolean;
-  savings: number | null;
+  offer: SpecialOffer;
   isAr: boolean;
+  lang: string;
   aed: string;
   saveLabel: string;
   fromLabel: string;
@@ -170,14 +136,9 @@ interface OfferCardProps {
 }
 
 function OfferCard({
-  title,
-  desc,
-  badge,
-  price,
-  originalPrice,
-  fromPrice,
-  savings,
+  offer,
   isAr,
+  lang,
   aed,
   saveLabel,
   fromLabel,
@@ -186,44 +147,70 @@ function OfferCard({
   onClaim,
   compact = false,
 }: OfferCardProps) {
+  const title = lang === 'ar' ? offer.titleAr : offer.titleEn;
+  const desc = lang === 'ar' ? offer.descAr : offer.descEn;
+  const badge = lang === 'ar' ? offer.badgeAr : offer.badgeEn;
+  const savings =
+    offer.originalPrice && offer.originalPrice > offer.price
+      ? offer.originalPrice - offer.price
+      : null;
+  const priceLabel = `${offer.price.toLocaleString()} ${aed}`;
+
   return (
     <div className="glass rounded-3xl overflow-hidden border-gold-400/15 animate-fade-in h-full flex flex-col hover:border-gold-400/35 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(212,175,55,0.12)]">
       <div
-        className={`relative bg-gradient-to-br from-gold-400/20 via-ink-800 to-ink-900 p-6 ${
-          compact ? 'min-h-[160px]' : 'min-h-[200px] md:min-h-[240px]'
-        } flex flex-col justify-between`}
+        className={`relative overflow-hidden ${
+          compact ? 'min-h-[200px]' : 'min-h-[240px] md:min-h-[280px]'
+        }`}
       >
-        <div className="flex items-start justify-between gap-3">
-          <div className="px-3 py-1.5 rounded-full bg-gold-gradient text-ink-950 text-xs font-semibold shrink-0">
-            {badge}
+        {offer.imageUrl ? (
+          <img
+            src={offer.imageUrl}
+            alt={title}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-gold-400/25 via-ink-800 to-ink-950" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gold-400/10 via-transparent to-transparent" />
+
+        <div className="relative h-full min-h-[inherit] p-6 flex flex-col justify-between">
+          <div className="flex items-start justify-between gap-3">
+            <div className="px-3 py-1.5 rounded-full bg-gold-gradient text-ink-950 text-xs font-semibold shrink-0 shadow-lg">
+              {badge}
+            </div>
+            {savings != null && offer.originalPrice != null && (
+              <div className="text-right">
+                <div className="text-xs text-ink-300 line-through">
+                  {offer.originalPrice.toLocaleString()} {aed}
+                </div>
+                <div className={`text-xs text-gold-300 font-medium ${isAr ? 'font-arabic' : ''}`}>
+                  {saveLabel} {savings.toLocaleString()} {aed}
+                </div>
+              </div>
+            )}
           </div>
-          {savings != null && originalPrice != null && (
-            <div className="text-right">
-              <div className="text-xs text-ink-400 line-through">
-                {originalPrice} {aed}
+
+          <div>
+            {offer.fromPrice && (
+              <div className={`text-xs text-gold-300 mb-1 ${isAr ? 'font-arabic' : ''}`}>
+                {fromLabel}
               </div>
-              <div className={`text-xs text-gold-300 font-medium ${isAr ? 'font-arabic' : ''}`}>
-                {saveLabel} {savings} {aed}
-              </div>
+            )}
+            <div className="inline-flex items-baseline gap-2 px-3 py-1.5 rounded-lg bg-black/50 border border-gold-400/30 backdrop-blur-sm">
+              <span className={`font-serif gold-text font-semibold ${compact ? 'text-3xl' : 'text-4xl lg:text-5xl'}`}>
+                {offer.price.toLocaleString()}
+              </span>
+              <span className={`text-base text-gold-200 font-medium ${isAr ? 'font-arabic' : ''}`}>{aed}</span>
             </div>
-          )}
-        </div>
-        <div>
-          {fromPrice && (
-            <div className={`text-xs text-gold-300 mb-1 ${isAr ? 'font-arabic' : ''}`}>
-              {fromLabel}
-            </div>
-          )}
-          <div className="flex items-baseline gap-2">
-            <span className={`font-serif gold-text ${compact ? 'text-4xl' : 'text-5xl lg:text-6xl'}`}>
-              {price.toLocaleString()}
-            </span>
-            <span className={`text-lg text-gold-200 ${isAr ? 'font-arabic' : ''}`}>{aed}</span>
+            <p className="sr-only">{priceLabel}</p>
           </div>
         </div>
       </div>
 
-      <div className={`p-6 ${compact ? '' : 'lg:p-8'} flex flex-col flex-1`}>
+      <div className={`p-6 ${compact ? '' : 'lg:p-8'} flex flex-col flex-1 bg-ink-950/40`}>
         <h3 className={`font-serif text-xl lg:text-2xl text-gold-100 mb-3 ${isAr ? 'font-arabic' : ''}`}>
           {title}
         </h3>

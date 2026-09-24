@@ -122,7 +122,10 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
               {t.admin.back}
             </button>
             <button
-              onClick={signOut}
+              onClick={async () => {
+                await signOut();
+                window.location.hash = '/admin';
+              }}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-full border border-gold-400/20 hover:bg-gold-400/10 text-xs text-gold-200 transition-all ${isAr ? 'font-arabic flex-row-reverse' : ''}`}
             >
               <LogOut className="w-3.5 h-3.5" />

@@ -59,6 +59,8 @@ export interface SpecialOffer {
   fromPrice?: boolean;
   badgeEn: string;
   badgeAr: string;
+  /** Drop in a custom photo URL — falls back to a luxury gradient placeholder */
+  imageUrl?: string;
 }
 
 /**
@@ -75,6 +77,7 @@ export const OFFERS: SpecialOffer[] = [
     price: 4999,
     badgeEn: 'Featured',
     badgeAr: 'مميز',
+    imageUrl: '/treatment-injectables.webp',
   },
   {
     id: 'sculptra',
@@ -85,6 +88,7 @@ export const OFFERS: SpecialOffer[] = [
     price: 2200,
     badgeEn: 'Collagen Boost',
     badgeAr: 'تعزيز الكولاجين',
+    imageUrl: '/treatment-skin.webp',
   },
   {
     id: 'deep-facial',
@@ -95,6 +99,7 @@ export const OFFERS: SpecialOffer[] = [
     price: 333,
     badgeEn: 'Most Popular',
     badgeAr: 'الأكثر طلباً',
+    imageUrl: '/treatment-skin.webp',
   },
   {
     id: 'laser-package',
@@ -106,6 +111,7 @@ export const OFFERS: SpecialOffer[] = [
     fromPrice: true,
     badgeEn: 'From',
     badgeAr: 'ابتداءً من',
+    imageUrl: '/treatment-laser.webp',
   },
   {
     id: 'hollywood-smile',
@@ -116,6 +122,7 @@ export const OFFERS: SpecialOffer[] = [
     price: 3999,
     badgeEn: 'Smile Makeover',
     badgeAr: 'تجميل الابتسامة',
+    imageUrl: '/treatment-dental.webp',
   },
 ];
 
@@ -194,6 +201,8 @@ export interface TeamMember {
   roleEn: string;
   roleAr: string;
   initials: string;
+  /** Optional headshot path — drop files into /public/team/ */
+  imageUrl?: string;
 }
 
 export const TEAM: TeamMember[] = [
@@ -204,6 +213,7 @@ export const TEAM: TeamMember[] = [
     roleEn: 'Dermatology & Aesthetics',
     roleAr: 'الأمراض الجلدية والتجميل',
     initials: 'CE',
+    imageUrl: '/team/clara.jpg',
   },
   {
     id: 'sarah',
@@ -212,14 +222,16 @@ export const TEAM: TeamMember[] = [
     roleEn: 'Cosmetic Dentist',
     roleAr: 'طبيبة أسنان تجميلية',
     initials: 'SA',
+    imageUrl: '/team/sarah.jpg',
   },
   {
     id: 'diyar',
     name: 'Dr. Diyar Malik',
     nameAr: 'د. ديار مالك',
-    roleEn: 'Aesthetic & General Dentist',
-    roleAr: 'طبيب أسنان تجميلي وعام',
+    roleEn: 'Aesthetic & General Dentistry',
+    roleAr: 'طب الأسنان التجميلي والعام',
     initials: 'DM',
+    imageUrl: '/team/diyar.jpg',
   },
   {
     id: 'nahla',
@@ -228,6 +240,7 @@ export const TEAM: TeamMember[] = [
     roleEn: 'Cosmetic Dentist',
     roleAr: 'طبيبة أسنان تجميلية',
     initials: 'NS',
+    imageUrl: '/team/nahla.jpg',
   },
   {
     id: 'saba',
@@ -236,5 +249,111 @@ export const TEAM: TeamMember[] = [
     roleEn: 'Facial Specialist & Beauty Therapist',
     roleAr: 'أخصائية وجه ومعالجة تجميل',
     initials: 'SH',
+    imageUrl: '/team/saba.jpg',
+  },
+];
+
+export interface BeforeAfterItem {
+  id: string;
+  titleEn: string;
+  titleAr: string;
+  beforeSrc: string;
+  afterSrc: string;
+}
+
+/** Swap beforeSrc / afterSrc paths when custom clinical photos are ready */
+export const BEFORE_AFTER: BeforeAfterItem[] = [
+  {
+    id: 'lip-filler',
+    titleEn: 'Lip Filler',
+    titleAr: 'فيلر الشفاه',
+    beforeSrc: '/before-after-1.webp',
+    afterSrc: '/after-after-1.webp',
+  },
+  {
+    id: 'laser-resurfacing',
+    titleEn: 'Laser Skin Resurfacing',
+    titleAr: 'تجديد البشرة بالليزر',
+    beforeSrc: '/treatment-laser.webp',
+    afterSrc: '/treatment-skin.webp',
+  },
+  {
+    id: 'profhilo',
+    titleEn: 'Profhilo Hydration',
+    titleAr: 'بروفييلو للترطيب',
+    beforeSrc: '/treatment-skin.webp',
+    afterSrc: '/after-after-1.webp',
+  },
+  {
+    id: 'aesthetic-dentistry',
+    titleEn: 'Aesthetic Dentistry',
+    titleAr: 'طب الأسنان التجميلي',
+    beforeSrc: '/treatment-dental.webp',
+    afterSrc: '/after-after-1.webp',
+  },
+  {
+    id: 'facial-glow',
+    titleEn: 'Facial Glow',
+    titleAr: 'توهج الوجه',
+    beforeSrc: '/before-after-1.webp',
+    afterSrc: '/treatment-injectables.webp',
+  },
+];
+
+export interface GalleryItem {
+  id: string;
+  src: string;
+  captionEn: string;
+  captionAr: string;
+}
+
+export const GALLERY: GalleryItem[] = [
+  {
+    id: 'lobby',
+    src: '/hero-clinic.webp',
+    captionEn: 'Reception Lounge',
+    captionAr: 'صالة الاستقبال',
+  },
+  {
+    id: 'laser-suite',
+    src: '/treatment-laser.webp',
+    captionEn: 'Laser Suite',
+    captionAr: 'جناح الليزر',
+  },
+  {
+    id: 'injectables',
+    src: '/treatment-injectables.webp',
+    captionEn: 'Injectables Suite',
+    captionAr: 'جناح الحقن',
+  },
+  {
+    id: 'skin-room',
+    src: '/treatment-skin.webp',
+    captionEn: 'Skin Therapy Room',
+    captionAr: 'غرفة علاجات البشرة',
+  },
+  {
+    id: 'dental',
+    src: '/treatment-dental.webp',
+    captionEn: 'Dental Studio',
+    captionAr: 'استوديو الأسنان',
+  },
+  {
+    id: 'results',
+    src: '/after-after-1.webp',
+    captionEn: 'Client Results',
+    captionAr: 'نتائج العملاء',
+  },
+  {
+    id: 'ambiance',
+    src: '/bg-texture.webp',
+    captionEn: 'Clinic Ambiance',
+    captionAr: 'أجواء العيادة',
+  },
+  {
+    id: 'before-after',
+    src: '/before-after-1.webp',
+    captionEn: 'Transformation Journey',
+    captionAr: 'رحلة التحوّل',
   },
 ];
