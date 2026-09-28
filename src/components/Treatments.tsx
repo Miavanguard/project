@@ -2,6 +2,7 @@ import { Zap, Syringe, Droplets, Smile, ArrowRight } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { useBooking } from '@/lib/booking';
 import BeforeAfterGrid from '@/components/BeforeAfterGrid';
+import { ServiceCardSkeleton, useImagesReady } from '@/components/Skeleton';
 
 const TREATMENTS = [
   {
@@ -38,6 +39,7 @@ export default function Treatments() {
   const { t, dir } = useI18n();
   const { openModal } = useBooking();
   const isAr = dir === 'rtl';
+  const imagesReady = useImagesReady(TREATMENTS.map((item) => item.image));
 
   return (
     <section id="treatments" className="relative py-24 lg:py-32 overflow-hidden">
@@ -60,7 +62,9 @@ export default function Treatments() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {TREATMENTS.map((tr, i) => {
+          {!imagesReady
+            ? TREATMENTS.map((tr) => <ServiceCardSkeleton key={tr.titleKey} />)
+            : TREATMENTS.map((tr, i) => {
             const Icon = tr.icon;
             return (
               <div

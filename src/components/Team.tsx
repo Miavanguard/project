@@ -3,6 +3,7 @@ import { Stethoscope } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { TEAM, type TeamMember } from '@/lib/constants';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
+import { TeamCardSkeleton, useImagesReady } from '@/components/Skeleton';
 
 interface TeamRow {
   id: string;
@@ -36,6 +37,7 @@ export default function Team() {
   const [members, setMembers] = useState<TeamMember[]>(
     () => TEAM.filter((m) => m.isActive !== false).sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
   );
+  const imagesReady = useImagesReady(members.map((member) => member.imageUrl));
 
   useEffect(() => {
     let cancelled = false;
@@ -79,7 +81,9 @@ export default function Team() {
 
         {/* Featured doctors with headshots first */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-5 max-w-7xl mx-auto">
-          {members.map((member, i) => {
+          {!imagesReady
+            ? members.map((member) => <TeamCardSkeleton key={member.id} />)
+            : members.map((member, i) => {
             const name = lang === 'ar' ? member.nameAr : member.name;
             const role = lang === 'ar' ? member.roleAr : member.roleEn;
             return (

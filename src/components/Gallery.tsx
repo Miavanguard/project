@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { GALLERY } from '@/lib/constants';
+import { GalleryItemSkeleton, useImagesReady } from '@/components/Skeleton';
 
 export default function Gallery() {
   const { t, lang, dir } = useI18n();
   const isAr = dir === 'rtl';
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const imagesReady = useImagesReady(GALLERY.map((item) => item.src));
 
   useEffect(() => {
     if (lightbox === null) return;
@@ -43,7 +45,9 @@ export default function Gallery() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 max-w-7xl mx-auto">
-          {GALLERY.map((item, i) => {
+          {!imagesReady
+            ? GALLERY.map((item) => <GalleryItemSkeleton key={item.id} />)
+            : GALLERY.map((item, i) => {
             const caption = lang === 'ar' ? item.captionAr : item.captionEn;
             return (
               <button

@@ -4,6 +4,7 @@ import { useI18n } from '@/lib/i18n';
 import { useBooking } from '@/lib/booking';
 import { OFFERS, getWhatsAppUrl, type SpecialOffer } from '@/lib/constants';
 import BnplBadges from '@/components/BnplBadges';
+import { OfferCardSkeleton, useImagesReady } from '@/components/Skeleton';
 
 /**
  * Active Monthly Specials carousel / grid.
@@ -14,6 +15,7 @@ export default function Offers() {
   const { openModal } = useBooking();
   const isAr = dir === 'rtl';
   const [active, setActive] = useState(0);
+  const imagesReady = useImagesReady(OFFERS.map((item) => item.imageUrl));
 
   const next = () => setActive((v) => (v + 1) % OFFERS.length);
   const prev = () => setActive((v) => (v - 1 + OFFERS.length) % OFFERS.length);
@@ -44,6 +46,19 @@ export default function Offers() {
           </p>
         </div>
 
+        {!imagesReady ? (
+          <>
+            <div className="max-w-4xl mx-auto lg:hidden">
+              <OfferCardSkeleton />
+            </div>
+            <div className="hidden lg:grid grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {OFFERS.map((item) => (
+                <OfferCardSkeleton key={item.id} />
+              ))}
+            </div>
+          </>
+        ) : (
+        <>
         <div className="max-w-4xl mx-auto lg:hidden">
           <div className="relative">
             <OfferCard
@@ -117,6 +132,8 @@ export default function Offers() {
             {t.offers.whatsappCta}
           </a>
         </div>
+        </>
+        )}
       </div>
     </section>
   );

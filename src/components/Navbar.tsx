@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Menu, X, Sparkles } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useI18n, type Lang } from '@/lib/i18n';
 import { useBooking } from '@/lib/booking';
 
@@ -52,34 +52,31 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       }`}
     >
       <nav className="section-pad flex items-center justify-between gap-4">
-        <button
-          onClick={() => onNavigate('site')}
-          className="flex items-center gap-2.5 group shrink-0"
+        <a
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            setMenuOpen(false);
+            window.history.pushState({}, '', '/');
+            onNavigate('site');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="flex items-center shrink-0 bg-transparent"
           aria-label="La Belleza Aesthetica Clinic"
         >
           {!logoFailed ? (
             <img
               src="/logo.png"
               alt="La Belleza Aesthetica Clinic"
-              className="h-10 w-auto object-contain drop-shadow-[0_0_12px_rgba(212,175,55,0.25)] group-hover:scale-[1.03] transition-transform duration-300"
+              className="h-10 md:h-12 w-auto object-contain bg-transparent"
               onError={() => setLogoFailed(true)}
             />
           ) : (
-            <>
-              <div className="relative w-9 h-9 rounded-full bg-gold-gradient flex items-center justify-center shadow-lg shadow-gold-400/20 group-hover:scale-110 transition-transform">
-                <Sparkles className="w-5 h-5 text-ink-950" />
-              </div>
-              <div className="text-left">
-                <div className={`font-serif text-lg leading-none ${dir === 'rtl' ? 'font-arabic' : ''}`}>
-                  <span className="gold-text">La Belleza</span>
-                </div>
-                <div className="text-[10px] tracking-[0.2em] uppercase text-ink-300 mt-0.5">
-                  {lang === 'ar' ? 'عيادة التجميل' : 'Aesthetica Clinic'}
-                </div>
-              </div>
-            </>
+            <span className={`font-serif text-lg leading-none gold-text ${dir === 'rtl' ? 'font-arabic' : ''}`}>
+              La Belleza
+            </span>
           )}
-        </button>
+        </a>
 
         <div className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (

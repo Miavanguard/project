@@ -1,4 +1,4 @@
-export type AppointmentStatus = 'pending' | 'confirmed' | 'contacted';
+export type AppointmentStatus = 'pending' | 'confirmed' | 'contacted' | 'cancelled';
 export type LeadStatus = 'new' | 'contacted' | 'converted' | 'lost';
 
 export interface Appointment {
