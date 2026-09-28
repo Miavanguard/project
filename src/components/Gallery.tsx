@@ -54,7 +54,7 @@ export default function Gallery() {
                 key={item.id}
                 type="button"
                 onClick={() => setLightbox(i)}
-                className="group relative aspect-[4/5] rounded-2xl overflow-hidden border border-gold-400/15 hover:border-gold-400/40 transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50"
+                className={`group relative ${item.square ? 'aspect-square' : 'aspect-[4/5]'} rounded-2xl overflow-hidden border border-gold-400/15 hover:border-gold-400/40 transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/50`}
               >
                 <img
                   src={item.src}

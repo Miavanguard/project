@@ -16,12 +16,14 @@ export default function Hero() {
       {/* Background */}
       <div className="absolute inset-0">
         <img
-          src="/hero-clinic.webp"
-          alt="Luxury clinic interior"
-          className="w-full h-full object-cover"
+          src="/1000798288.jpg"
+          alt="La Belleza Reception & Welcome Area"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-950/80 via-ink-950/60 to-ink-950" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink-950/90 via-transparent to-ink-950/40" />
+        <div
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85))' }}
+        />
       </div>
 
       {/* Decorative gold orbs */}

@@ -52,7 +52,14 @@ function ComparisonSlider({ beforeSrc, afterSrc, title, beforeLabel, afterLabel,
         }}
         onTouchEnd={stop}
       >
-        <img src={afterSrc} alt={`${title} after`} className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+        <img
+          src={afterSrc}
+          alt={`La Belleza Clinic - ${title} Before and After Transformation`}
+          width={600}
+          height={800}
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          draggable={false}
+        />
         <span className={`absolute bottom-2 right-2 px-2 py-0.5 rounded-full glass text-[10px] sm:text-xs text-gold-200 ${isAr ? 'font-arabic' : ''}`}>
           {afterLabel}
         </span>
@@ -60,8 +67,10 @@ function ComparisonSlider({ beforeSrc, afterSrc, title, beforeLabel, afterLabel,
         <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
           <img
             src={beforeSrc}
-            alt={`${title} before`}
-            className="absolute inset-0 h-full object-cover max-w-none"
+            alt={`La Belleza Clinic - ${title} Before and After Transformation`}
+            width={600}
+            height={800}
+            className="absolute inset-0 h-full object-cover object-center max-w-none"
             style={{ width: containerRef.current ? `${containerRef.current.offsetWidth}px` : '100%' }}
             draggable={false}
           />

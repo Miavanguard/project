@@ -61,14 +61,14 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             onNavigate('site');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="flex items-center shrink-0 bg-transparent"
+          className="flex items-center self-center shrink-0 bg-transparent leading-none"
           aria-label="La Belleza Aesthetica Clinic"
         >
           {!logoFailed ? (
             <img
               src="/logo.png"
               alt="La Belleza Aesthetica Clinic"
-              className="h-10 md:h-12 w-auto object-contain bg-transparent"
+              className="h-12 w-auto max-h-12 md:h-14 md:max-h-14 object-contain bg-transparent"
               onError={() => setLogoFailed(true)}
             />
           ) : (

@@ -282,8 +282,8 @@ export const BEFORE_AFTER: BeforeAfterItem[] = [
     id: 'lip-filler',
     titleEn: 'Lip Filler',
     titleAr: 'فيلر الشفاه',
-    beforeSrc: '/before-after-1.webp',
-    afterSrc: '/after-after-1.webp',
+    beforeSrc: '/before-1.jpg',
+    afterSrc: '/after-1.jpg',
   },
   {
     id: 'laser-resurfacing',
@@ -303,15 +303,15 @@ export const BEFORE_AFTER: BeforeAfterItem[] = [
     id: 'aesthetic-dentistry',
     titleEn: 'Aesthetic Dentistry',
     titleAr: 'طب الأسنان التجميلي',
-    beforeSrc: '/treatment-dental.webp',
-    afterSrc: '/after-after-1.webp',
+    beforeSrc: '/before-2.jpg',
+    afterSrc: '/after-2.jpg',
   },
   {
     id: 'facial-glow',
-    titleEn: 'Facial Glow',
+    titleEn: 'Facial Glowup',
     titleAr: 'توهج الوجه',
-    beforeSrc: '/before-after-1.webp',
-    afterSrc: '/treatment-injectables.webp',
+    beforeSrc: '/before-3.jpg',
+    afterSrc: '/after-3.jpg',
   },
 ];
 
@@ -320,14 +320,23 @@ export interface GalleryItem {
   src: string;
   captionEn: string;
   captionAr: string;
+  /** Square tile; other gallery photos stay portrait */
+  square?: boolean;
 }
 
 export const GALLERY: GalleryItem[] = [
   {
     id: 'lobby',
-    src: '/hero-clinic.webp',
-    captionEn: 'Reception Lounge',
-    captionAr: 'صالة الاستقبال',
+    src: '/1000798288.jpg',
+    captionEn: 'La Belleza Reception & Welcome Area',
+    captionAr: 'استقبال لا بيليزا ومنطقة الترحيب',
+  },
+  {
+    id: 'marble-signage',
+    src: '/1000798291.jpg',
+    captionEn: 'La Belleza Aesthetic Clinic Marble Signage',
+    captionAr: 'لافتة لا بيليزا الرخامية',
+    square: true,
   },
   {
     id: 'laser-suite',
@@ -361,9 +370,9 @@ export const GALLERY: GalleryItem[] = [
   },
   {
     id: 'ambiance',
-    src: '/bg-texture.webp',
-    captionEn: 'Clinic Ambiance',
-    captionAr: 'أجواء العيادة',
+    src: '/1000798290.jpg',
+    captionEn: 'Clinic Interior Decor & Ambient Lighting',
+    captionAr: 'ديكور العيادة والإضاءة المحيطة',
   },
   {
     id: 'before-after',

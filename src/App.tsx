@@ -4,10 +4,12 @@ import { AuthProvider, useAuth } from '@/lib/auth';
 import { BookingProvider } from '@/lib/booking';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import About from '@/components/About';
 import Treatments from '@/components/Treatments';
 import Offers from '@/components/Offers';
 import Team from '@/components/Team';
 import Gallery from '@/components/Gallery';
+import Ambience from '@/components/Ambience';
 import Testimonials from '@/components/Testimonials';
 import Footer from '@/components/Footer';
 import WhatsAppFab from '@/components/WhatsAppFab';
@@ -102,9 +104,11 @@ function AppContent() {
       <Navbar onNavigate={navigate} currentRoute={route} />
       <main>
         <Hero />
+        <About />
         <Treatments />
         <Offers />
         <Team />
+        <Ambience />
         <Gallery />
         <Testimonials />
       </main>
