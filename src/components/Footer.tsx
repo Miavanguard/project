@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Instagram, ArrowUp, Sparkles, ExternalLink } from 'lucide-react';
+import { Phone, Mail, MapPin, Instagram, ArrowUp, ExternalLink } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { useBooking } from '@/lib/booking';
 import { CLINIC, getWhatsAppUrl } from '@/lib/constants';
@@ -45,9 +45,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-full bg-gold-gradient flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-ink-950" />
-              </div>
+              <img
+                src="/footer-logo.png"
+                alt="La Belleza"
+                className="w-9 h-9 rounded-full object-cover"
+              />
               <div className="font-serif text-lg gold-text">La Belleza</div>
             </div>
             <p className={`text-sm text-ink-400 leading-relaxed ${isAr ? 'font-arabic' : ''}`}>
