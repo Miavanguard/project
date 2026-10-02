@@ -53,9 +53,10 @@ export default function BookingModal() {
       }
       setLoadingSlots(true);
       const { data, error } = await supabase
-        .from('booked_slots')
+        .from('appointments')
         .select('preferred_date, preferred_time')
-        .eq('preferred_date', date);
+        .eq('preferred_date', date)
+        .neq('status', 'cancelled');
       if (!cancelled) {
         if (error) {
           setBookedSlots((prev) => ({ ...prev, [date]: [] }));
@@ -114,7 +115,7 @@ export default function BookingModal() {
     }
 
     const { error: insertError } = await supabase.from('appointments').insert({
-      name,
+      full_name: name,
       email: email || null,
       phone,
       service,
